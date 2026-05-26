@@ -200,6 +200,8 @@ Los endpoints `/api/private` y `/api/scoped` requieren un Access Token válido.
 2. Ve a la pestaña **Authorization**
 3. Auth Type: **OAuth 2.0**
 4. Haz clic en **Get New Access Token** y llena:
+
+
 | Campo | Valor |
 |-------|-------|
 | Grant Type | `Client Credentials` |
