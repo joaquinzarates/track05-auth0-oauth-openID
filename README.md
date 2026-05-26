@@ -212,6 +212,7 @@ Los endpoints `/api/private` y `/api/scoped` requieren un Access Token válido.
 | Client Authentication | `Send as Basic Auth header` |
  
 5. En **Extra Token Parameters** agrega:
+   
 | Key | Value | Send in |
 |-----|-------|---------|
 | `audience` | `https://api.tu-proyecto.com` | `Request Body` |
