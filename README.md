@@ -1,10 +1,22 @@
 <a id="readme-top"></a>
- 
+<p align="center">
+    <img src="https://img.shields.io/badge/Node.js-18+-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" />
+    <img src="https://img.shields.io/badge/Express-4.-000000?style=for-the-badge&logo=express&logoColor=white" />
+    <img src="https://img.shields.io/badge/Auth0-Identity-EB5424?style=for-the-badge&logo=auth0&logoColor=white" />
+    <img src="https://img.shields.io/badge/JWT-Tokens-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" />
+    <img src="https://img.shields.io/badge/OAuth2-Authorization-3C3C3C?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/OpenID_Connect-Authentication-F78C40?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/EJS-Templates-B4CA65?style=for-the-badge" />
+    <img src="https://img.shields.io/badge/dotenv-Config-ECD53F?style=for-the-badge&logo=dotenv&logoColor=black" />
+  </p> 
 <div align="center">
   <h3 align="center">OAuth 2.0 + OpenID Connect con Auth0</h3>
   <p align="center">
     Proyecto para validar los conocimientos obtenidos en el Track: Seguridad Web & API, para ello se realizará el desarrollo de una aplicación que implementa autenticación delegada con Auth0 mediante OAuth 2.0 y OpenID Connect
+    <br />
+    
   </p>
+  
 </div>
 
 ---
@@ -26,7 +38,6 @@
     <li><a href="#contacto">Contacto</a></li>
   </ol>
 </details>
-
 ---
  
 ## Sobre el proyecto
@@ -41,7 +52,6 @@ Aplicación Node.js + Express que implementa el flujo **Authorization Code con P
 - Autorización por scopes (`read:reports`)
 - Respuestas HTTP correctas: 200, 401, 403
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
 ---
  
 ## Tecnologías
@@ -54,7 +64,6 @@ Aplicación Node.js + Express que implementa el flujo **Authorization Code con P
 - dotenv
 - Auth0
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
 ---
  
 ## Requisitos previos
@@ -66,7 +75,6 @@ node --version
 ```
  
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
 ---
  
 ## Instalación
@@ -92,7 +100,6 @@ cp .env.example .env
 ```
  
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
 ---
  
 ## Configuración de Auth0
@@ -108,7 +115,6 @@ cp .env.example .env
    - Agrega el permiso `read:reports` en la pestaña **Permissions**
 5. En **App Access** de la API, activa `read:reports` para tu aplicación en **User-delegated Access** y **Client Access**
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
 ---
  
 ## Variables de entorno
@@ -131,7 +137,6 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
  
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
 ---
  
 ## Uso
@@ -143,8 +148,8 @@ node src/server.js
 Abre el navegador en `http://localhost:3000`
  
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
---- 
+---
+ 
 ## Endpoints
  
 | Método | Endpoint | Descripción | Auth |
@@ -159,10 +164,8 @@ Abre el navegador en `http://localhost:3000`
 | GET | `/api/scoped` | Requiere scope `read:reports` | 403 sin scope |
  
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
 ---
-
-
+ 
 ## Validación del Access Token
  
 La API valida cada token automáticamente con `express-oauth2-jwt-bearer`:
@@ -177,13 +180,12 @@ La API valida cada token automáticamente con `express-oauth2-jwt-bearer`:
 El parámetro `state` es generado y verificado automáticamente por `express-openid-connect` para mitigar ataques CSRF en el flujo de autorización.
  
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
 ---
-
+ 
 ## Contacto
  
-Joaquin Zárate  - joaquin.zarate@ids.com.mx
+Joaquin Zárate - joaquin.zarate@ids.com.mx
  
 Project Link: [https://github.com/joaquinzarates/OAuth-2.0---OpenID-Connect---Auth0](https://github.com/joaquinzarates/OAuth-2.0---OpenID-Connect---Auth0)
  
-<p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p
+<p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
