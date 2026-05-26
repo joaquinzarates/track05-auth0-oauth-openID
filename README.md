@@ -211,7 +211,7 @@ Los endpoints `/api/private` y `/api/scoped` requieren un Access Token válido.
 | Scope | dejar vacío para 403 / `read:reports` para 200 |
 | Client Authentication | `Send as Basic Auth header` |
  
-5. En **Extra Token Parameters** agrega:
+5. En **Advanced**→**Token Request(Parameters - key:value)** agrega:
    
 | Key | Value | Send in |
 |-----|-------|---------|
