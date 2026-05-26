@@ -2,7 +2,7 @@
 
 function requireScope(...scopes) {
   return (req, res, next) => {
-    const tokenPayload = req.auth;
+    const tokenPayload = req.auth?.payload;
 
     if (!tokenPayload) {
       return res.status(401).json({
