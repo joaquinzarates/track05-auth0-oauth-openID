@@ -112,19 +112,19 @@ node --version
 git clone https://github.com/joaquinzarates/track05-auth0-oauth-openID.git
 ```
 
-1. Entrar a la carpeta
+2. Entrar a la carpeta
 
 ```sh
 cd track05-auth0-oauth-openID
 ```
 
-1. Instalar las dependencias
+3. Instalar las dependencias
 
 ```sh
 npm install
 ```
 
-1. Copiar el archivo de variables de entorno
+4. Copiar el archivo de variables de entorno
 
 ```sh
 cp .env.example .env
