@@ -106,14 +106,15 @@ node --version
    - En cada pestaña selecciona el recuadro `read:reports`
    
    > **Atención:** Presiona **Save** antes de cambiar de pestaña, de lo contrario los permisos no quedan guardados.
-    **Para probar 200 (con scope):**
+
+   **Para probar 200 (con scope):**
    - Ve a **Application Access → fila del proyecto → Edit → Client Access**
    - marca `read:reports` y da **Save**
    - Genera el token → tendrá scope → prueba `/api/scoped` → responde **200**
    
-   **Para probar 200 — con scope:**
-   - Ve a **Application Access** y confirma que `read:reports` está activo en **Client Access**
-   - Genera el token → tendrá scope `read:reports` → prueba `/api/scoped` → responde **200**
+   **Para probar 403 (sin scope):**
+   - Ve a **Application Access** y confirma que `read:reports` no está activo en **Client Access**
+   - Genera el token → no tendrá scope `read:reports` → prueba `/api/scoped` → responde **403**
    
 ---
 
