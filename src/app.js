@@ -1,5 +1,5 @@
 'use strict';
-
+require('dotenv').config({ path: require('path').resolve(__dirname, '../.env'), debug: true });
 const express = require('express');
 const path    = require('path');
 const { auth } = require('express-openid-connect');
