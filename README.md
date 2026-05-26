@@ -100,8 +100,21 @@ node --version
    - Signing Algorithm: `RS256`
 6. En la pestaña **Permissions** de la API agrega:
    - Permission: `read:reports`
-7. En **App Access** de la API activa `read:reports` para tu aplicación en **User-delegated Access** y **Client Access**
-
+7. En **Application Access** de la API configura los permisos:
+   - Busca tu aplicación en el listado y haz clic en **Edit**
+   - Se abre un menú lateral con dos pestañas: **User-delegated Access** y **Client Access**
+   - En cada pestaña selecciona el recuadro `read:reports`
+   
+   > **Atención:** Presiona **Save** antes de cambiar de pestaña, de lo contrario los permisos no quedan guardados.
+    **Para probar 200 (con scope):**
+   - Ve a **Application Access → fila del proyecto → Edit → Client Access**
+   - marca `read:reports` y da **Save**
+   - Genera el token → tendrá scope → prueba `/api/scoped` → responde **200**
+   
+   **Para probar 200 — con scope:**
+   - Ve a **Application Access** y confirma que `read:reports` está activo en **Client Access**
+   - Genera el token → tendrá scope `read:reports` → prueba `/api/scoped` → responde **200**
+   
 ---
 
 ## Instalación
@@ -189,56 +202,6 @@ http://localhost:3000/api/public
 Respuesta esperada: **200 OK**
  
 ---
- 
-#### Endpoints protegidos
- 
-Los endpoints `/api/private` y `/api/scoped` requieren un Access Token válido.
-
-**Opción A — Postman**
- 
-1. Crea un nuevo request `GET`
-2. Ve a la pestaña **Authorization**
-3. Auth Type: **OAuth 2.0**
-4. Haz clic en **Get New Access Token** y llena:
-
-
-| Campo | Valor |
-|-------|-------|
-| Grant Type | `Client Credentials` |
-| Access Token URL | `https://{tu-dominio}.auth0.com/oauth/token` |
-| Client ID | `tu-client-id` |
-| Client Secret | `tu-client-secret` |
-| Scope | dejar vacío para 403 / `read:reports` para 200 |
-| Client Authentication | `Send as Basic Auth header` |
- 
-5. En **Advanced**→**Token Request(Parameters - key:value)** agrega:
-   
-| Key | Value | Send in |
-|-----|-------|---------|
-| `audience` | `https://api.tu-proyecto.com` | `Request Body` |
- 
-6. Haz clic en **Get New Access Token** y copia el token
----
-
-
-**Opción B — curl**
- 
-Token sin scope (para probar 401/403):
- 
-```sh
-curl -X POST https://{tu-dominio}.auth0.com/oauth/token -H "Content-Type: application/json" -d "{\"client_id\":\"tu-client-id\",\"client_secret\":\"tu-client-secret\",\"audience\":\"https://api.tu-proyecto.com\",\"grant_type\":\"client_credentials\"}"
-```
- 
-Token con scope `read:reports` (para probar 200 en `/api/scoped`):
- 
-```sh
-curl -X POST https://{tu-dominio}.auth0.com/oauth/token -H "Content-Type: application/json" -d "{\"client_id\":\"tu-client-id\",\"client_secret\":\"tu-client-secret\",\"audience\":\"https://api.tu-proyecto.com\",\"grant_type\":\"client_credentials\",\"scope\":\"read:reports\"}"
-```
- 
-Copia el valor de `access_token` de la respuesta.
- 
----
- 
  
 #### Resultados esperados
  
