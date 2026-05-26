@@ -167,42 +167,97 @@ node src/server.js
 ```
 Abre el navegador en `http://localhost:3000`
 
-<p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
+### Flujo web
+ 
+1. Haz clic en **Iniciar sesión con Auth0**
+2. Ingresa tus credenciales en la pantalla de Auth0
+3. Serás redirigido a la página de inicio con tu sesión activa
+4. Ve a `/profile` para ver los claims del ID Token
+5. Haz clic en **Cerrar sesión** para finalizar la sesión
+---
+ 
+### Pruebas de la API
+ 
+#### Endpoint público
+ 
+Abre directamente en el navegador:
+ 
+```
+http://localhost:3000/api/public
+```
+ 
+Respuesta esperada: **200 OK**
+ 
+---
+ 
+#### Endpoints protegidos
+ 
+Los endpoints `/api/private` y `/api/scoped` requieren un Access Token válido.
 
-
+**Opción A — Postman**
+ 
+1. Crea un nuevo request `GET`
+2. Ve a la pestaña **Authorization**
+3. Auth Type: **OAuth 2.0**
+4. Haz clic en **Get New Access Token** y llena:
+| Campo | Valor |
+|-------|-------|
+| Grant Type | `Client Credentials` |
+| Access Token URL | `https://{tu-dominio}.auth0.com/oauth/token` |
+| Client ID | `tu-client-id` |
+| Client Secret | `tu-client-secret` |
+| Scope | dejar vacío para 403 / `read:reports` para 200 |
+| Client Authentication | `Send as Basic Auth header` |
+ 
+5. En **Extra Token Parameters** agrega:
+| Key | Value | Send in |
+|-----|-------|---------|
+| `audience` | `https://api.tu-proyecto.com` | `Request Body` |
+ 
+6. Haz clic en **Get New Access Token** y copia el token
 ---
 
-## Endpoints
 
-| Método | Endpoint | Descripción | Auth |
-|--------|----------|-------------|------|
-| GET | `/` | Página de inicio | No |
-| GET | `/login` | Inicia flujo PKCE | No |
-| GET | `/callback` | Intercambia código por tokens | No |
-| GET | `/profile` | Claims del ID Token | Sesión |
-| GET | `/logout` | Cierra sesión | No |
-| GET | `/api/public` | Endpoint público | No |
-| GET | `/api/private` | Requiere Access Token | 401 sin token |
-| GET | `/api/scoped` | Requiere scope `read:reports` | 403 sin scope |
-
-<p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
-
+**Opción B — curl**
+ 
+Token sin scope (para probar 401/403):
+ 
+```sh
+curl -X POST https://{tu-dominio}.auth0.com/oauth/token -H "Content-Type: application/json" -d "{\"client_id\":\"tu-client-id\",\"client_secret\":\"tu-client-secret\",\"audience\":\"https://api.tu-proyecto.com\",\"grant_type\":\"client_credentials\"}"
+```
+ 
+Token con scope `read:reports` (para probar 200 en `/api/scoped`):
+ 
+```sh
+curl -X POST https://{tu-dominio}.auth0.com/oauth/token -H "Content-Type: application/json" -d "{\"client_id\":\"tu-client-id\",\"client_secret\":\"tu-client-secret\",\"audience\":\"https://api.tu-proyecto.com\",\"grant_type\":\"client_credentials\",\"scope\":\"read:reports\"}"
+```
+ 
+Copia el valor de `access_token` de la respuesta.
+ 
 ---
+ 
+ 
+#### Resultados esperados
+ 
+**GET /api/private**
+ 
+| Condición | Respuesta |
+|-----------|-----------|
+| Sin token | **401** — sin autenticación |
+| Con token válido | **200 OK** |
+ 
+**GET /api/scoped**
+ 
+| Condición | Respuesta |
+|-----------|-----------|
+| Sin token | **401** — sin autenticación |
+| Token sin scope `read:reports` | **403** — sin autorización |
+| Token con scope `read:reports` | **200 OK** |
+ 
 
-## Validación del Access Token
-
-La API valida cada token automáticamente con `express-oauth2-jwt-bearer`:
-
-| Claim | Verificación |
-|-------|-------------|
-| Firma | RS256 via JWKS de Auth0 |
-| `iss` | `https://tu-dominio.us.auth0.com/` |
-| `aud` | `https://api.tu-proyecto.com` |
-| `exp` | Token no expirado |
-
-El parámetro `state` es generado y verificado automáticamente por `express-openid-connect` para mitigar ataques CSRF en el flujo de autorización.
 
 <p align="right">(<a href="#readme-top">Regresar al inicio</a>)</p>
+
 
 ---
 
