@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="/css/main.css" />  <title>Track 05: OAuth 2.0 / OpenID</title>
+</head>
+<body>
+
+  <header>
+    <h1>OAuth 2.0 / OpenID (Track 05)</h1>
+    <nav>
+      <% if (isAuthenticated) { %>
+        <a href="/profile">Perfil</a>
+        <a href="/logout">Cerrar sesión</a>
+      <% } else { %>
+        <a href="/login">Iniciar sesión</a>
+      <% } %>
+    </nav>
+  </header>
+
+  <% if (isAuthenticated && user) { %>
+    <div class="user-bar">
+      <span>Bienvenido, <strong><%= user.email %></strong></span>
+      <a href="/logout" class="btn btn-outline">Cerrar sesión</a>
+    </div>
+  <% } %>
+
+  <div class="card">
+    <h2>Endpoints disponibles</h2>
+    <ul>
+      <li><code>GET /api/public</code> — Público, sin token requerido.</li>
+      <li><code>GET /api/private</code> — Requiere Access Token válido. 401 sin autenticación.</li>
+      <li><code>GET /api/scoped</code> — Requiere token + scope <code>read:reports</code>. 403 sin autorización.</li>
+    </ul>
+  </div>
+
+  <% if (!isAuthenticated) { %>
+    <a href="/login" class="btn">Iniciar sesión con Auth0</a>
+  <% } else { %>
+    <a href="/profile" class="btn">Ver claims del ID Token</a>
+  <% } %>
+
+</body>
+</html>
