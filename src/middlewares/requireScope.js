@@ -16,7 +16,7 @@ function requireScope(...scopes) {
 
     if (!hasAllScopes) {
       return res.status(403).json({
-        error: 'insufficient_scope',
+        error: 'permisos insuficientes',
         message: `El token no contiene el scope requerido: ${scopes.join(', ')}`,
         required: scopes,
         present: tokenScopes,
