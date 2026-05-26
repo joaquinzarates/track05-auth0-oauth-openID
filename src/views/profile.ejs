@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+  <title>Perfil — Claims del ID Token</title>
+</head>
+<body>
+
+  <nav>
+    <a href="/">Inicio</a>
+    <a href="/logout">Cerrar sesión</a>
+  </nav>
+
+  <h1>Perfil de usuario</h1>
+
+  <% if (user.picture) { %>
+    <img src="<%= user.picture %>" alt="avatar" width="80" />
+  <% } %>
+
+  <h2>Claims del ID Token</h2>
+<table style="border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="border: 1px solid #ddd; padding: 8px;">Claim</th>
+      <th style="border: 1px solid #ddd; padding: 8px;">Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (const [key, value] of Object.entries(claims)) { %>
+      <tr>
+        <td style="border: 1px solid #ddd; padding: 8px;"><code><%= key %></code></td>
+        <td style="border: 1px solid #ddd; padding: 8px;"><%= JSON.stringify(value) %></td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
+
+  <h2>ID Token (JWT crudo)</h2>
+  <p style="word-break:break-all;font-family:monospace;font-size:.8rem">
+    <%= rawIdToken %>
+  </p>
+
+  <br />
+  <hr>
+
+</body>
+</html>
