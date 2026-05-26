@@ -109,13 +109,13 @@ node --version
 1. Clonar el repositorio
 
 ```sh
-git clone https://github.com/joaquinzarates/OAuth-2.0---OpenID-Connect---Auth0.git
+git clone https://github.com/joaquinzarates/track05-auth0-oauth-openID.git
 ```
 
 1. Entrar a la carpeta
 
 ```sh
-cd OAuth-2.0---OpenID-Connect---Auth0
+cd track05-auth0-oauth-openID
 ```
 
 1. Instalar las dependencias
