@@ -1,12 +1,10 @@
 'use strict';
-
-require('dotenv').config();
-
+console.log('ENV:', process.env.AUTH0_DOMAIN, process.env.AUTH0_CLIENT_ID);
 const app  = require('./app');
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor ejecutandose en http://localhost:${PORT}`);
   console.log('');
   console.log('Rutas disponibles:');
   console.log(`  GET  /           → Página de inicio`);
