@@ -189,37 +189,139 @@ Abre el navegador en `http://localhost:3000`
 4. Ve a `/profile` para ver los claims del ID Token
 5. Haz clic en **Cerrar sesión** para finalizar la sesión
 ---
- 
-### Pruebas de la API
- 
-#### Endpoint público
- 
+
+ ## Pruebas de la API
+
+### Endpoint público
+
 Abre directamente en el navegador:
- 
+
 ```
 http://localhost:3000/api/public
 ```
- 
-Respuesta esperada: **200 OK**
- 
+
+dado que tiene acceso público, no se requiere token
+
 ---
- 
-#### Resultados esperados
- 
-**GET /api/private**
- 
-| Condición | Respuesta |
-|-----------|-----------|
-| Sin token | **401** — sin autenticación |
-| Con token válido | **200 OK** |
- 
-**GET /api/scoped**
- 
-| Condición | Respuesta |
-|-----------|-----------|
-| Sin token | **401** — sin autenticación |
-| Token sin scope `read:reports` | **403** — sin autorización |
-| Token con scope `read:reports` | **200 OK** |
+
+### Endpoint privado — GET /api/private
+
+#### Sin token — 401
+
+Abre directamente en el navegador:
+
+```
+http://localhost:3000/api/private
+```
+
+Respuesta esperada: **401** — sin autenticación
+
+#### Con token válido — 200 OK
+
+1. En Postman crea un nuevo request `POST`
+2. URL: `https://{tu-dominio}.auth0.com/oauth/token`
+3. Mediante la navegación primero accede a la pestaña **Body → raw → JSON** y pega:
+
+```json
+{
+  "client_id": "tu-client-id",
+  "client_secret": "tu-client-secret",
+  "audience": "https://api.tu-proyecto.com",
+  "grant_type": "client_credentials"
+}
+```
+
+4. Presiona **Send** y copia el `access_token`
+5. Crea un nuevo request `GET`
+6. URL: `http://localhost:3000/api/private`
+7. Pestaña **Authorization → en el menú desplegable Bearer Token** → pega el token
+8. Presiona **Send**
+
+Respuesta esperada: **200 OK**
+
+---
+
+### Endpoint con scope — GET /api/scoped
+
+#### Sin scope — 403
+
+**Paso 1 — Desactivar el permiso en Auth0**
+
+1. Ve a **Applications → APIs → tu API → Application Access**
+2. Busca tu aplicación en el listado en formato de tabla y haz clic en **Edit**
+3. En la pestaña **Client Access** desmarca `read:reports`
+4. Da **Save**
+
+> ⚠️ Presiona **Save** antes de cambiar de pestaña, de lo contrario los cambios no quedan guardados.
+
+**Paso 2 — Generar el token sin scope**
+
+1. En Postman crea un nuevo request `POST`
+2. URL: `https://{tu-dominio}.auth0.com/oauth/token`
+3. Pestaña **Body → raw → JSON** y pega:
+
+```json
+{
+  "client_id": "tu-client-id",
+  "client_secret": "tu-client-secret",
+  "audience": "https://api.tu-proyecto.com",
+  "grant_type": "client_credentials"
+}
+```
+
+4. Presiona en el botón **Send** y copia el `access_token` generado.
+
+**Paso 3 — Probar `/api/scoped`**
+
+1. Crea un nuevo request `GET`
+2. URL: `http://localhost:3000/api/scoped`
+3. En la pestaña **Authorization → seleccionar en el menú desplegable: Bearer Token** → pega el token
+4. Presiona **Send**
+
+Respuesta esperada: **403** — sin autorización
+
+**Paso 4 — Volver a activar el permiso**
+
+1. Ve a **Applications → APIs → tu API → Application Access**
+2. Busca tu aplicación en el listado en formato de tabla y haz clic en **Edit**
+3. En la pestaña **Client Access** marca `read:reports`
+4. Presiona **Save**
+
+---
+
+#### Con scope — 200
+
+**Paso 1 — Confirmar que el permiso está activo**
+
+Verifica que `read:reports` está marcado en **Client Access** tras el Paso 4 anterior.
+
+**Paso 2 — Generar el token con scope**
+
+1. En Postman usa el mismo request `POST`
+2. Agrega `"scope": "read:reports"` al JSON:
+
+```json
+{
+  "client_id": "tu-client-id",
+  "client_secret": "tu-client-secret",
+  "audience": "https://api.tu-proyecto.com",
+  "grant_type": "client_credentials",
+  "scope": "read:reports"
+}
+```
+
+3. Presiona **Send** y copia el `access_token`
+
+**Paso 3 — Probar `/api/scoped`**
+
+1. Usa el mismo request `GET` a `http://localhost:3000/api/scoped`
+2. Reemplaza el token en **Authorization → del menú desplegable seleccionamos Bearer Token**
+3. Presiona **Send**
+
+Respuesta esperada: **200 OK**
+
+---
+
  
 
 
